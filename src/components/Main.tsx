@@ -4,12 +4,18 @@ import PersonalInfo from "./PersonalInfo";
 import "../index.css";
 import Profile from "./Profile";
 import Additional from "./AdditiionalQ";
+import { UploadContext } from "../contexts/UploadContext";
+import { useState } from "react";
+
 const Main = () => {
+  const [selectedImage, setSelectedImage] = useState<string>("");
   return (
     <main>
-      <BlockWrapper title="Upload cover image">
-        <Upload />
-      </BlockWrapper>
+      <UploadContext.Provider value={{ selectedImage, setSelectedImage }}>
+        <BlockWrapper title="Upload cover image">
+          <Upload />
+        </BlockWrapper>
+      </UploadContext.Provider>
       <BlockWrapper title="Personal Information">
         <PersonalInfo />
       </BlockWrapper>

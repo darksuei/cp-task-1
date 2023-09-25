@@ -90,7 +90,9 @@ main {
 }
 section {
   width: 425px;
+  position: relative;
   height: fit-content;
+  min-height: 250px;
   padding-bottom: 25px;
   overflow: hidden;
   display: flex;
@@ -119,6 +121,7 @@ section > .header {
   border: 1px dashed rgb(31 41 55);
   gap: 0px;
   cursor: pointer;
+  position: relative;
 }
 .mini-header {
   font-size: 14px;
@@ -130,6 +133,7 @@ section > .header {
 .personal-info {
   gap: 10px;
   width: 100%;
+  margin-bottom: 30px;
 }
 .form-container {
   display: flex;
@@ -173,7 +177,7 @@ section > .header {
   gap: 10px;
 }
 #add-question {
-  margin: 20px 0 0 30px;
+  margin: 0 0 0 30px;
   font-size: 13px;
   font-weight: 600;
   gap: 10px;
@@ -255,6 +259,7 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   cursor: pointer;
   width: fit-content;
   color: red;
@@ -317,6 +322,7 @@ button:hover {
   gap: 20px;
   width: 90%;
   margin-inline: auto;
+  margin-top: 20px;
 }
 .new-question > div {
   display: flex;
@@ -331,7 +337,78 @@ button:hover {
 .new-question > div > input {
   padding: 14px;
   cursor: pointer;
+  background-color: #fff;
+  outline: none;
+  border: 1.5px solid #ccc;
+}
+.new-question > div > input {
+  cursor: text;
 }
 .new-question > div > select > option {
   padding: 50px;
+}
+.img-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.img-wrapper > div {
+  height: 17.5%;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
+.hidden-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.uploaded-img {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+}
+.choice {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.choice > img {
+  width: 16px;
+  height: 16px;
+}
+.choice > input {
+  padding: 12px;
+  outline: none;
+  border: 1.5px solid #ccc;
+}
+.w-fit {
+  width: fit-content;
+}
+textarea {
+  padding: 10px;
+}
+.video-input-cat {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.video-input-cat > input {
+  padding: 12px;
+  outline: none;
+  border: 1.5px solid #ccc;
+}
+.video-input-cat > select {
+  padding: 12px;
+  cursor: pointer;
+  border: 1.5px solid #ccc;
 }

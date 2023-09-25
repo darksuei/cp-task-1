@@ -40,11 +40,14 @@ const PersonalInfo = () => {
           );
         })}
       </div>
-      {newQuestion && <NewQuestion fn={handleNewQuestion} />}
-      <div id="add-question" onClick={handleNewQuestion}>
-        <img src={plus} />
-        <span>Add a question</span>
-      </div>
+      {newQuestion ? (
+        <NewQuestion fn={handleNewQuestion} />
+      ) : (
+        <div id="add-question" onClick={handleNewQuestion}>
+          <img src={plus} />
+          <span>Add a question</span>
+        </div>
+      )}
     </>
   );
 };
