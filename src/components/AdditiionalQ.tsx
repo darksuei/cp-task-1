@@ -3,16 +3,11 @@ import pen from "../assets/pen.png";
 import "../index.css";
 import NewQuestion from "./NewQuestion";
 import { useState } from "react";
-const questions = [
-  {
-    type: "Paragraph",
-    value: "Please tell me about yourself in less than 500 words",
-  },
-  {
-    type: "Dropdown",
-    value: "Please select the year of graduadion from the list below",
-  },
-];
+interface questionDto {
+  type: string;
+  value: string;
+}
+const questions: questionDto[] = [];
 const Additional = ({ formData, setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
   const [newFormDetails, setNewFormDetails] = useState({

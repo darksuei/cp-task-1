@@ -5,6 +5,7 @@ import close from "../assets/close.png";
 
 const Upload = ({ formData, setFormData }: any) => {
   const fileInput = useRef<HTMLInputElement | null>(null);
+  const [imgData, setImgData] = useState<any>(null); // COVER IMG
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
   >(null);
@@ -21,6 +22,15 @@ const Upload = ({ formData, setFormData }: any) => {
       const reader = new FileReader();
       reader.onload = () => {
         setSelectedImage(reader.result);
+        setFormData((prevData: any) => ({
+          data: {
+            ...prevData.data,
+            attributes: {
+              ...prevData.data.attributes,
+              coverImage: reader.result?.toString(),
+            },
+          },
+        }));
       };
       reader.readAsDataURL(file);
     } else {
@@ -29,6 +39,15 @@ const Upload = ({ formData, setFormData }: any) => {
   };
   function handleReupload() {
     setSelectedImage(null);
+    setFormData((prevData: any) => ({
+      data: {
+        ...prevData.data,
+        attributes: {
+          ...prevData.data.attributes,
+          coverImage: "",
+        },
+      },
+    }));
     if (fileInput.current) {
       fileInput.current.value = "";
     }

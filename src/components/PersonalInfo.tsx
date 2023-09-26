@@ -51,7 +51,7 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
                       <input
                         type="checkbox"
                         className="checkbox"
-                        name={"internal"}
+                        name="internal"
                         onChange={(e) => handleChange(e, item)}
                       />
                       Internal
