@@ -3,6 +3,7 @@ import "../index.css";
 import { useEffect, useState } from "react";
 import NewQuestion from "./NewQuestion";
 import pen from "../assets/pen.png";
+import { extraQuestionsDto } from "../Dto";
 const profile: any = [
   {
     value: "Education",
@@ -17,10 +18,7 @@ const profile: any = [
     name: "resume",
   },
 ];
-interface extraQuestionsDto {
-  type: string;
-  question: string;
-}
+
 const extraProfileQuestions: extraQuestionsDto[] = [];
 
 const Profile = ({ formData, setFormData }: any) => {
@@ -40,7 +38,10 @@ const Profile = ({ formData, setFormData }: any) => {
         ...prevData.data,
         attributes: {
           ...prevData.data.attributes,
-          profileQuestions: extraProfileQuestions,
+          profile: {
+            ...prevData.data.attributes.profile,
+            profileQuestions: extraProfileQuestions,
+          },
         },
       },
     }));

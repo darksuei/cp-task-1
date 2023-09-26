@@ -3,10 +3,8 @@ import pen from "../assets/pen.png";
 import "../index.css";
 import NewQuestion from "./NewQuestion";
 import { useState, useEffect } from "react";
-interface extraQuestionsDto {
-  type: string;
-  question: string;
-}
+import { extraQuestionsDto } from "../Dto";
+
 const extraProfileQuestions: extraQuestionsDto[] = [];
 console.log(extraProfileQuestions.length);
 const Additional = ({ formData, setFormData }: any) => {
@@ -32,7 +30,7 @@ const Additional = ({ formData, setFormData }: any) => {
         ...prevData.data,
         attributes: {
           ...prevData.data.attributes,
-          profileQuestions: extraProfileQuestions,
+          customizedQuestions: extraProfileQuestions,
         },
       },
     }));

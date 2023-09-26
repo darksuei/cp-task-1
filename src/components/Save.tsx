@@ -14,6 +14,7 @@ const Save = (props: { size: number; fn: Function; saveFn: Function }) => {
         <span>Delete question</span>
       </span>
       <button
+        className="btn"
         style={{ width: props.size }}
         onClick={() => {
           props.saveFn();

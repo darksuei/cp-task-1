@@ -29,6 +29,17 @@ const NewQuestion = (props: any) => {
       };
     });
   }
+  function handleChoicesChange(e: any) {
+    setNewFormObj((prev: any) => {
+      return {
+        ...prev,
+        choices: {
+          ...prev.choices,
+          [e.target.name]: e.target.value,
+        },
+      };
+    });
+  }
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
@@ -118,7 +129,7 @@ const NewQuestion = (props: any) => {
                   <label htmlFor="max-choice">Max choice allowed</label>
                   <input
                     type="text"
-                    name="max-choice"
+                    name="maxChoice"
                     placeholder="Enter number of choices allowed here"
                   />
                 </>
@@ -143,7 +154,7 @@ const NewQuestion = (props: any) => {
                     </div>
                   </div>
                   <span className="flex-row w-fit">
-                    <input type="checkbox" className="checkbox" />
+                    <input type="checkbox" name="other" className="checkbox" />
                     <span className="description">Enable "Other" option</span>
                   </span>
                 </>
@@ -152,7 +163,11 @@ const NewQuestion = (props: any) => {
               return (
                 <>
                   <span className="flex-row w-fit">
-                    <input type="checkbox" className="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="disqualify"
+                      className="checkbox"
+                    />
                     <span className="description">
                       Disqualify candidate if the answer is no
                     </span>
@@ -168,7 +183,7 @@ const NewQuestion = (props: any) => {
                       type="text"
                       placeholder="Max duration of the video"
                     />
-                    <select>
+                    <select name="other">
                       <option value="">In (sec/min)</option>
                       <option value="seconds">Seconds</option>
                       <option value="minutes">Minutes</option>

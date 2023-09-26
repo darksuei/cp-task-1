@@ -87,6 +87,7 @@ main {
   flex-direction: column;
   gap: 40px;
   padding-block: 20px;
+  position: relative;
 }
 section {
   width: 425px;
@@ -267,7 +268,7 @@ input:checked + .slider:before {
 .close > img {
   width: 20px;
 }
-button {
+.btn {
   background-color: #087b2f;
   border-radius: 5px;
   padding: 10px;
@@ -423,4 +424,13 @@ textarea {
   width: 90%;
   margin-inline: auto;
   margin-top: 10px;
+}
+#main-submit-btn {
+  background-color: #087b2f;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }

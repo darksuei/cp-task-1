@@ -3,10 +3,9 @@ import plus from "../assets/plus.png";
 import { useState, useEffect } from "react";
 import pen from "../assets/pen.png";
 import NewQuestion from "./NewQuestion";
-interface extraQuestionsDto {
-  type: string;
-  question: string;
-}
+import { extraQuestionsDto } from "../Dto";
+import { infoDto } from "../Dto";
+
 const extraProfileQuestions: extraQuestionsDto[] = [];
 
 const PersonalInfo = ({ formData, setFormData }: any) => {
@@ -29,7 +28,10 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
         ...prevData.data,
         attributes: {
           ...prevData.data.attributes,
-          profileQuestions: extraProfileQuestions,
+          personalInformation: {
+            ...prevData.data.attributes.personalInformation,
+            personalQuestions: extraProfileQuestions,
+          },
         },
       },
     }));
@@ -125,17 +127,6 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
 };
 export default PersonalInfo;
 
-interface infoDto {
-  type: string;
-  name: string;
-  value: string;
-  hasOptions: boolean;
-  details?: string;
-  options?: {
-    internal: boolean;
-    show: boolean;
-  };
-}
 const initialValues = {
   firstName: {
     internal: false,
