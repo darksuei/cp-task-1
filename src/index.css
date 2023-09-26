@@ -34,8 +34,7 @@ ul > li {
 .nav-tab {
   flex-direction: row;
   gap: 20px;
-  height: 80px;
-  margin-top: 1rem;
+  height: 85px;
   font-size: 14px;
   box-shadow: 0 6px 6px -3px rgb(0 0 0 / 0.1), 0 -6px 6px -3px rgb(0 0 0 / 0.1);
 }
@@ -43,6 +42,12 @@ ul > li {
   height: 50%;
   margin-block: auto;
   width: 160px;
+  box-sizing: border-box;
+  /* padding-inline: 10px; */
+  text-align: center;
+}
+.high-z-index {
+  z-index: 1000;
 }
 .nav-tab > .border {
   border-right: 1px solid rgb(149, 149, 149);
@@ -79,21 +84,23 @@ ul > li {
   background-color: #00635b;
   width: 18px;
   height: 18px;
+  z-index: 1;
 }
 main {
   width: 80%;
   margin-inline: auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 40px;
   padding-block: 20px;
   position: relative;
 }
 section {
-  width: 425px;
+  width: 450px;
   position: relative;
   height: fit-content;
-  min-height: 250px;
+  min-height: 260px;
   padding-bottom: 25px;
   overflow: hidden;
   display: flex;
@@ -121,7 +128,8 @@ section > .header {
   width: 90%;
   margin-top: 20px;
   margin-inline: auto;
-  padding-block: 15px;
+  box-sizing: border-box;
+  padding: 15px;
   border: 1px dashed rgb(31 41 55);
   gap: 0px;
   cursor: pointer;
@@ -152,6 +160,8 @@ section > .header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
 }
 .label {
   font-size: 13px;
@@ -240,7 +250,7 @@ section > .header {
 }
 
 input:checked + .slider {
-  background-color: #087b2f;
+  background-color: #007bff;
 }
 input:checked + .slider:before {
   -webkit-transform: translateX(10px);
@@ -436,4 +446,43 @@ textarea {
   border: none;
   outline: none;
   cursor: pointer;
+}
+#main-submit-btn:hover {
+  background-color: #00635b;
+}
+@media (max-width: 768px) {
+  main {
+    width: 80%;
+  }
+  section {
+    margin-left: 5%;
+    width: 90%;
+  }
+  .nav-tab > li {
+    width: 110px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 470px) {
+  .hide-wrapper {
+    flex-direction: column;
+  }
+  .field-options > span {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.nt-img {
+  width: 20px;
+}
+.nt-img-wrapper {
+  background-color: rgb(59 130 246);
+  padding: 8px;
+  border-radius: 50%;
+  height: fit-content;
+  width: 20px;
+  cursor: pointer;
+}
+.nt-img-wrapper:hover {
+  background-color: #00635b;
 }

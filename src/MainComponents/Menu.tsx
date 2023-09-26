@@ -20,15 +20,9 @@ export const Menu = () => {
           <img src={doc} alt="Doc" onClick={handleNavClick} />
         </div>
       </div>
-      <div className="absolute-mid" style={NTStyle}>
-        <img src={nt} alt="NT" style={{ width: "20px" }} />
+      <div className="absolute-mid nt-img-wrapper">
+        <img src={nt} alt="NT" className="nt-img" />
       </div>
     </nav>
   );
-};
-const NTStyle: React.CSSProperties = {
-  backgroundColor: "rgb(59 130 246)",
-  padding: "8px",
-  borderRadius: "50%",
-  height: "fit-content",
 };

@@ -15,9 +15,11 @@ export const NewQuestion = (props: any) => {
     newInput.className = "choice";
     newInput.innerHTML = `
       <input type="text" name="choice" placeholder="Type here" />
-      <img src=${plus} alt="plus" className="plus-mcq" onClick={createNewInput}/>
+      <img src=${plus} alt="plus" class="plus-mcq"/>
     `;
-    mcq.current?.insertBefore(newInput, mcq.current.lastChild);
+    mcq.current?.appendChild(newInput);
+    const plusImage = newInput.querySelector(".plus-mcq");
+    plusImage!.addEventListener("click", createNewInput);
   };
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,16 +96,21 @@ export const NewQuestion = (props: any) => {
         </select>
       </div>
       <div className="new-question-option">
-        <label htmlFor="question">Question</label>
-        <input
-          type="text"
-          name="question"
-          placeholder="Type here"
-          onChange={handleQuestionChange}
-        />
+        {type !== "FileUpload" && (
+          <>
+            <label htmlFor="question">Question</label>
+            <input
+              type="text"
+              name="question"
+              placeholder="Type here"
+              onChange={handleQuestionChange}
+            />
+          </>
+        )}
         {(() => {
           switch (type) {
-            case "multiple":
+            case "MultipleChoice":
+            case "Dropdown":
               return (
                 <>
                   <label htmlFor="question">Choice</label>
@@ -135,32 +142,7 @@ export const NewQuestion = (props: any) => {
                   />
                 </>
               );
-            case "dropdown":
-              return (
-                <>
-                  <label htmlFor="question">Choice</label>
-                  <div className="mcq-input-wrapper" ref={mcq}>
-                    <div className="choice">
-                      <input
-                        type="text"
-                        name="choice"
-                        placeholder="Type here"
-                      />
-                      <img
-                        src={plus}
-                        alt="plus"
-                        className="plus-mcq"
-                        onClick={createNewInput}
-                      />
-                    </div>
-                  </div>
-                  <span className="flex-row w-fit">
-                    <input type="checkbox" name="other" className="checkbox" />
-                    <span className="description">Enable "Other" option</span>
-                  </span>
-                </>
-              );
-            case "yesorno":
+            case "YesNo":
               return (
                 <>
                   <span className="flex-row w-fit">
@@ -175,10 +157,13 @@ export const NewQuestion = (props: any) => {
                   </span>
                 </>
               );
-            case "video":
+            case "FileUpload":
               return (
                 <>
-                  <textarea name="video" placeholder="Type here"></textarea>
+                  <textarea
+                    name="video"
+                    placeholder="Type question here"
+                  ></textarea>
                   <span className="video-input-cat">
                     <input
                       type="text"

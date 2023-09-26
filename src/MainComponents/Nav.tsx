@@ -12,7 +12,8 @@ export const Nav = () => {
         Program Details
       </li>
       <li className="flex-row active">
-        Application Form <span className="app-extension"></span>
+        <span className="high-z-index">Application Form</span>{" "}
+        <span className="app-extension"></span>
       </li>
       <li className="flex-row border" onClick={handleNavClick}>
         Workflow

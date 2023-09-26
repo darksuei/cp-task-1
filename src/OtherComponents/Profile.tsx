@@ -1,21 +1,34 @@
-import plus from "../assets/plus.png";
 import "../index.css";
 import React, { useEffect, useState } from "react";
-import { NewQuestion } from "./NewQuestion";
+
+//Assets
+import plus from "../assets/plus.png";
 import pen from "../assets/pen.png";
+import close from "../assets/close.png";
+import { NewQuestion } from "./NewQuestion";
 import { extraQuestionsDto, profileDto } from "../Dto";
 import { initialNewForm, profile } from "../constants";
 
 const extraProfileQuestions: extraQuestionsDto[] = [];
 
 export const Profile = ({ setFormData }: any) => {
+  const [allowEdit, setAllowEdit] = useState<boolean[]>(
+    Array(extraProfileQuestions.length).fill(false)
+  );
   const [newQuestion, setNewQuestion] = useState(false);
   const [profileData, setProfileData] = useState<any>(initialValues);
   const [newFormDetails, setNewFormDetails] = useState(initialNewForm);
 
+  const handleEditClick = (idx: number) => {
+    const updatedAllowEdit = [...allowEdit];
+    updatedAllowEdit[idx] = !updatedAllowEdit[idx];
+    setAllowEdit(updatedAllowEdit);
+  };
+
   useEffect(() => {
     if (newFormDetails.type !== "" && newFormDetails.question !== "") {
       extraProfileQuestions.push(newFormDetails);
+      setAllowEdit([...allowEdit, false]);
     }
     setNewQuestion(false);
     setFormData((prevData: any) => ({
@@ -91,7 +104,7 @@ export const Profile = ({ setFormData }: any) => {
                 </span>
               </span>
             </div>
-            <input type="text" name={"text"} />
+            {/* <input type="text" name={"text"} /> */}
           </div>
         );
       })}
@@ -102,7 +115,26 @@ export const Profile = ({ setFormData }: any) => {
               <span className="question-type">{question.type}</span>
               <div className="question-value">
                 {question.question}
-                <img src={pen} alt="Pen" />
+                {allowEdit[idx] ? (
+                  <span
+                    className="close"
+                    onClick={() => {
+                      handleEditClick(idx);
+                      extraProfileQuestions.pop();
+                    }}
+                  >
+                    <img src={close} alt="close" />
+                    <span>Delete question</span>
+                  </span>
+                ) : (
+                  <img
+                    src={pen}
+                    alt="Pen"
+                    onClick={() => {
+                      handleEditClick(idx);
+                    }}
+                  />
+                )}
               </div>
             </div>
           );

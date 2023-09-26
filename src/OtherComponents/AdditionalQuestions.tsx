@@ -1,6 +1,7 @@
 import "../index.css";
 import plus from "../assets/plus.png";
 import pen from "../assets/pen.png";
+import close from "../assets/close.png";
 
 //Components
 import { NewQuestion } from "./NewQuestion";
@@ -11,10 +12,19 @@ import { extraQuestionsDto } from "../Dto";
 const extraAddQuestions: extraQuestionsDto[] = [];
 
 export const Additional = ({ setFormData }: any) => {
+  const [allowEdit, setAllowEdit] = useState<boolean[]>(
+    Array(extraAddQuestions.length).fill(false)
+  );
   const [newQuestion, setNewQuestion] = useState(false);
   const [newFormDetails, setNewFormDetails] = useState(initialNewForm);
   const handleNewQuestion = () => {
     setNewQuestion(!newQuestion);
+  };
+
+  const handleEditClick = (idx: number) => {
+    const updatedAllowEdit = [...allowEdit];
+    updatedAllowEdit[idx] = !updatedAllowEdit[idx];
+    setAllowEdit(updatedAllowEdit);
   };
 
   useEffect(() => {
@@ -46,7 +56,26 @@ export const Additional = ({ setFormData }: any) => {
                 <span className="question-type">{question.type}</span>
                 <div className="question-value">
                   {question.question}
-                  <img src={pen} alt="Pen" />
+                  {allowEdit[idx] ? (
+                    <span
+                      className="close"
+                      onClick={() => {
+                        handleEditClick(idx);
+                        extraAddQuestions.pop();
+                      }}
+                    >
+                      <img src={close} alt="close" />
+                      <span>Delete question</span>
+                    </span>
+                  ) : (
+                    <img
+                      src={pen}
+                      alt="Pen"
+                      onClick={() => {
+                        handleEditClick(idx);
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             );

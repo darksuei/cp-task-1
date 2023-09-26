@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 //Assets
 import plus from "../assets/plus.png";
 import pen from "../assets/pen.png";
+import close from "../assets/close.png";
 import { NewQuestion } from "./NewQuestion";
 import { info } from "../constants";
 import { infoDto, extraQuestionsDto } from "../Dto";
@@ -12,6 +13,9 @@ import { initialPersonalValues } from "../constants";
 const extraPersonalQuestions: extraQuestionsDto[] = [];
 
 export const PersonalInfo = ({ setFormData }: any) => {
+  const [allowEdit, setAllowEdit] = useState<boolean[]>(
+    Array(extraPersonalQuestions.length).fill(false)
+  );
   const [newQuestion, setNewQuestion] = useState(false);
   const [newFormDetails, setNewFormDetails] = useState({
     type: "",
@@ -24,6 +28,7 @@ export const PersonalInfo = ({ setFormData }: any) => {
   useEffect(() => {
     if (newFormDetails.type !== "" && newFormDetails.question !== "") {
       extraPersonalQuestions.push(newFormDetails);
+      setAllowEdit([...allowEdit, false]);
     }
     setNewQuestion(false);
     setFormData((prevData: any) => ({
@@ -39,6 +44,13 @@ export const PersonalInfo = ({ setFormData }: any) => {
       },
     }));
   }, [newFormDetails]);
+
+  const handleEditClick = (idx: number) => {
+    const updatedAllowEdit = [...allowEdit];
+    updatedAllowEdit[idx] = !updatedAllowEdit[idx];
+    setAllowEdit(updatedAllowEdit);
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     item: infoDto
@@ -98,7 +110,7 @@ export const PersonalInfo = ({ setFormData }: any) => {
                   </span>
                 )}
               </div>
-              <input type={item.type} name={item.name} />
+              {/* <input type={item.type} name={item.name} /> */}
             </div>
           );
         })}
@@ -110,7 +122,26 @@ export const PersonalInfo = ({ setFormData }: any) => {
               <span className="question-type">{question.type}</span>
               <div className="question-value">
                 {question.question}
-                <img src={pen} alt="Pen" />
+                {allowEdit[idx] ? (
+                  <span
+                    className="close"
+                    onClick={() => {
+                      handleEditClick(idx);
+                      extraPersonalQuestions.pop();
+                    }}
+                  >
+                    <img src={close} alt="close" />
+                    <span>Delete question</span>
+                  </span>
+                ) : (
+                  <img
+                    src={pen}
+                    alt="Pen"
+                    onClick={() => {
+                      handleEditClick(idx);
+                    }}
+                  />
+                )}
               </div>
             </div>
           );
