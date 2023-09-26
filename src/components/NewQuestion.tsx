@@ -1,11 +1,29 @@
 import "../index.css";
 import Save from "./Save";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import plus from "../assets/plus.png";
 
-const NewQuestion = (props: { fn: Function }) => {
+const NewQuestion = (props: any) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const [newFormObj, setNewFormObj] = useState<any>([]);
   const [type, setType] = useState<string>("text");
+  const mcq = useRef<HTMLDivElement | null>(null);
+
+  const createNewInput = () => {
+    const newInput = document.createElement("div");
+    newInput.className = "choice";
+    newInput.innerHTML = `
+      <input type="text" name="choice" placeholder="Type here" />
+      <img src=${plus} alt="plus" className="plus-mcq" onClick={createNewInput}/>
+    `;
+    mcq.current?.insertBefore(newInput, mcq.current.lastChild);
+  };
+  function handleChange() {
+    setNewFormObj([
+      ...props.newFormObj,
+      { type: type, name: "", value: "", hasOptions: true },
+    ]);
+  }
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
@@ -21,7 +39,7 @@ const NewQuestion = (props: { fn: Function }) => {
         setType("yesorno");
         break;
       case "dropdown":
-        setType("multiple");
+        setType("dropdown");
         break;
       case "multiple":
         setType("multiple");
@@ -61,16 +79,63 @@ const NewQuestion = (props: { fn: Function }) => {
       </div>
       <div className="new-question-option">
         <label htmlFor="question">Question</label>
-        <input type="text" name="question" placeholder="Type here" />
+        <input
+          type="text"
+          name="question"
+          placeholder="Type here"
+          onChange={handleChange}
+        />
         {(() => {
           switch (type) {
             case "multiple":
               return (
                 <>
                   <label htmlFor="question">Choice</label>
-                  <div className="choice">
-                    <input type="text" name="choice" placeholder="Type here" />
-                    <img src={plus} alt="plus" />
+                  <div className="mcq-input-wrapper" ref={mcq}>
+                    <div className="choice">
+                      <input
+                        type="text"
+                        name="choice"
+                        placeholder="Type here"
+                      />
+                      <img
+                        src={plus}
+                        alt="plus"
+                        className="plus-mcq"
+                        onClick={createNewInput}
+                      />
+                    </div>
+                  </div>
+                  <span className="flex-row w-fit">
+                    <input type="checkbox" className="checkbox" />
+                    <span className="description">Enable "Other" option</span>
+                  </span>
+                  <label htmlFor="max-choice">Max choice allowed</label>
+                  <input
+                    type="text"
+                    name="max-choice"
+                    placeholder="Enter number of choices allowed here"
+                  />
+                </>
+              );
+            case "dropdown":
+              return (
+                <>
+                  <label htmlFor="question">Choice</label>
+                  <div className="mcq-input-wrapper" ref={mcq}>
+                    <div className="choice">
+                      <input
+                        type="text"
+                        name="choice"
+                        placeholder="Type here"
+                      />
+                      <img
+                        src={plus}
+                        alt="plus"
+                        className="plus-mcq"
+                        onClick={createNewInput}
+                      />
+                    </div>
                   </div>
                   <span className="flex-row w-fit">
                     <input type="checkbox" className="checkbox" />
@@ -111,7 +176,13 @@ const NewQuestion = (props: { fn: Function }) => {
           }
         })()}
       </div>
-      <Save size={90} fn={props.fn} />
+      <span
+        onClick={() => {
+          props.setNewFormDetails(newFormObj);
+        }}
+      >
+        <Save size={90} fn={props.fn} />
+      </span>
     </div>
   );
 };

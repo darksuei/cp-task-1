@@ -201,8 +201,8 @@ section > .header {
 .toggle {
   position: relative;
   display: inline-block;
-  width: 26px; /* Adjusted width */
-  height: 14px; /* Reduced height */
+  width: 26px;
+  height: 14px;
 }
 
 .toggle input {
@@ -236,9 +236,8 @@ section > .header {
 }
 
 input:checked + .slider {
-  background-color: #2196f3;
+  background-color: #087b2f;
 }
-
 input:checked + .slider:before {
   -webkit-transform: translateX(10px);
   -ms-transform: translateX(10px);
@@ -411,4 +410,12 @@ textarea {
   padding: 12px;
   cursor: pointer;
   border: 1.5px solid #ccc;
+}
+.plus-mcq {
+  cursor: pointer;
+}
+.mcq-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

@@ -4,27 +4,31 @@ import PersonalInfo from "./PersonalInfo";
 import "../index.css";
 import Profile from "./Profile";
 import Additional from "./AdditiionalQ";
-import { UploadContext } from "../contexts/UploadContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Save from "./Save";
 
 const Main = () => {
-  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [formData, setFormData] = useState({});
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
   return (
     <main>
-      <UploadContext.Provider value={{ selectedImage, setSelectedImage }}>
-        <BlockWrapper title="Upload cover image">
-          <Upload />
-        </BlockWrapper>
-      </UploadContext.Provider>
+      <BlockWrapper title="Upload cover image">
+        <Upload formData={formData} setFormData={setFormData} />
+      </BlockWrapper>
+
       <BlockWrapper title="Personal Information">
-        <PersonalInfo />
+        <PersonalInfo formData={formData} setFormData={setFormData} />
       </BlockWrapper>
       <BlockWrapper title="Profile">
-        <Profile />
+        <Profile formData={formData} setFormData={setFormData} />
       </BlockWrapper>
       <BlockWrapper title="Additional questions">
-        <Additional />
+        <Additional formData={formData} setFormData={setFormData} />
       </BlockWrapper>
+      <Save size={120} fn={() => {}} />
     </main>
   );
 };

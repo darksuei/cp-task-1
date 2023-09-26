@@ -4,11 +4,21 @@ import { useState } from "react";
 import NewQuestion from "./NewQuestion";
 const profile: string[] = ["Education", "Experience", "Resume"];
 
-const Profile = () => {
+const Profile = ({ formData, setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
+  const [newFormDetails, setNewFormDetails] = useState({
+    type: "",
+    name: "",
+    value: "",
+    hasOptions: true,
+  });
   function handleNewQuestion() {
     setNewQuestion(!newQuestion);
   }
+  const handleChange = (e: any) => {
+    const { name, checked } = e.target;
+    setFormData({ ...formData, [name]: checked });
+  };
   return (
     <div>
       {profile.map((item, idx) => {
@@ -20,12 +30,22 @@ const Profile = () => {
               </label>
               <span className="field-options">
                 <span>
-                  <input type="checkbox" className="checkbox" />
+                  <input
+                    type="checkbox"
+                    className="checkbox"
+                    name=""
+                    onChange={handleChange}
+                  />
                   Internal
                 </span>
                 <span className="hide-wrapper flex-row">
                   <label className="toggle">
-                    <input type="checkbox" id="toggleSwitch" />
+                    <input
+                      type="checkbox"
+                      id="toggleSwitch"
+                      name=""
+                      onChange={handleChange}
+                    />
                     <span className="slider"></span>
                   </label>
                   <label htmlFor="toggleSwitch">Hide</label>

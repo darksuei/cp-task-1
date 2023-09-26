@@ -13,11 +13,21 @@ const questions = [
     value: "Please select the year of graduadion from the list below",
   },
 ];
-const Additional = () => {
+const Additional = ({ formData, setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
+  const [newFormDetails, setNewFormDetails] = useState({
+    type: "",
+    name: "",
+    value: "",
+    hasOptions: true,
+  });
   function handleNewQuestion() {
     setNewQuestion(!newQuestion);
   }
+  const handleChange = (e: any) => {
+    const { name, checked } = e.target;
+    setFormData({ ...formData, [name]: checked });
+  };
   return (
     <>
       <div>

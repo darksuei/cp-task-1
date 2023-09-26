@@ -3,11 +3,16 @@ import upload from "../assets/upload.png";
 import { useState, useRef } from "react";
 import close from "../assets/close.png";
 
-const Upload = () => {
+const Upload = ({ formData, setFormData }: any) => {
   const fileInput = useRef<HTMLInputElement | null>(null);
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
   >(null);
+
+  const handleChange = (e: any) => {
+    const { name, checked } = e.target;
+    setFormData({ ...formData, [name]: checked });
+  };
 
   const handleImageUpload = (e: any) => {
     const file = e.target.files[0];
