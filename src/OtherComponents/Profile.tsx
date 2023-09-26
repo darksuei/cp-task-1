@@ -1,33 +1,18 @@
 import plus from "../assets/plus.png";
 import "../index.css";
-import { useEffect, useState } from "react";
-import NewQuestion from "./NewQuestion";
+import React, { useEffect, useState } from "react";
+import { NewQuestion } from "./NewQuestion";
 import pen from "../assets/pen.png";
-import { extraQuestionsDto } from "../Dto";
-const profile: any = [
-  {
-    value: "Education",
-    name: "education",
-  },
-  {
-    value: "Experience",
-    name: "experience",
-  },
-  {
-    value: "Resume",
-    name: "resume",
-  },
-];
+import { extraQuestionsDto, profileDto } from "../Dto";
+import { initialNewForm, profile } from "../constants";
 
 const extraProfileQuestions: extraQuestionsDto[] = [];
 
-const Profile = ({ formData, setFormData }: any) => {
+export const Profile = ({ setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
   const [profileData, setProfileData] = useState<any>(initialValues);
-  const [newFormDetails, setNewFormDetails] = useState({
-    type: "",
-    question: "",
-  });
+  const [newFormDetails, setNewFormDetails] = useState(initialNewForm);
+
   useEffect(() => {
     if (newFormDetails.type !== "" && newFormDetails.question !== "") {
       extraProfileQuestions.push(newFormDetails);
@@ -46,10 +31,15 @@ const Profile = ({ formData, setFormData }: any) => {
       },
     }));
   }, [newFormDetails]);
-  function handleNewQuestion() {
+
+  const handleNewQuestion = () => {
     setNewQuestion(!newQuestion);
-  }
-  const handleChange = (e: any, item: any) => {
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    item: profileDto
+  ) => {
     const { name, checked } = e.target;
     setProfileData((prevPrevFormData: any) => ({
       ...prevPrevFormData,
@@ -70,7 +60,7 @@ const Profile = ({ formData, setFormData }: any) => {
   };
   return (
     <div>
-      {profile.map((item: any, idx: number) => {
+      {profile.map((item, idx: number) => {
         return (
           <div key={idx} className="form-container">
             <div className="form-label-wrapper">
@@ -101,7 +91,7 @@ const Profile = ({ formData, setFormData }: any) => {
                 </span>
               </span>
             </div>
-            <input type="text" name={item} />
+            <input type="text" name={"text"} />
           </div>
         );
       })}
@@ -133,8 +123,6 @@ const Profile = ({ formData, setFormData }: any) => {
     </div>
   );
 };
-
-export default Profile;
 
 const initialValues = {
   education: {

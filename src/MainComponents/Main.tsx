@@ -1,19 +1,21 @@
-import BlockWrapper from "./BlockWrapper";
-import Upload from "./Upload";
-import PersonalInfo from "./PersonalInfo";
 import "../index.css";
-import Profile from "./Profile";
-import Additional from "./AdditiionalQ";
 import { useState, useEffect } from "react";
 
-const Main = () => {
+//Components
+import { BlockWrapper } from "../OtherComponents";
+import { Upload } from "../OtherComponents";
+import { PersonalInfo } from "../OtherComponents";
+import { Profile } from "../OtherComponents";
+import { Additional } from "../OtherComponents";
+
+export const Main = () => {
   const [formData, setFormData] = useState<any>({
     data: {
       attributes: {
         personalInformation: {},
       },
     },
-  }); // OVERALL FORM DATA FROM ALL COMPONENTS
+  });
 
   // FUNCTION TO FETCH DATA ATTRIBUTES FROM SERVER USING GET AS DESCRIBED IN THE YAML FILE
   useEffect(() => {
@@ -25,10 +27,6 @@ const Main = () => {
     }
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   // SUBMIT FORM DATA TO SERVER USING PUT AS DESCRIBED IN THE YAML FILE
   async function handleSubmit() {
@@ -72,7 +70,7 @@ const Main = () => {
         <Additional formData={formData} setFormData={setFormData} />
       </BlockWrapper>
       <button
-        style={{ width: 100 }}
+        style={{ width: 110 }}
         onClick={handleSubmit}
         id="main-submit-btn"
       >
@@ -81,4 +79,3 @@ const Main = () => {
     </main>
   );
 };
-export default Main;

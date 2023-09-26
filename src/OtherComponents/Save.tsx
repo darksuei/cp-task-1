@@ -1,7 +1,11 @@
 import "../index.css";
 import close from "../assets/close.png";
 
-const Save = (props: { size: number; fn: Function; saveFn: Function }) => {
+export const Save = (props: {
+  size: number;
+  fn: Function;
+  saveFn: Function;
+}) => {
   return (
     <div className="btn-wrapper">
       <span
@@ -25,4 +29,3 @@ const Save = (props: { size: number; fn: Function; saveFn: Function }) => {
     </div>
   );
 };
-export default Save;

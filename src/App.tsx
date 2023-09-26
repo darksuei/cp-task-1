@@ -1,9 +1,9 @@
 import "./index.css";
-import Nav from "./components/Nav";
-import Menu from "./components/Menu";
-import Main from "./components/Main";
+import { Nav } from "./MainComponents";
+import { Menu } from "./MainComponents";
+import { Main } from "./MainComponents/Main";
 
-function App() {
+const App = () => {
   return (
     <>
       <Nav />
@@ -11,6 +11,6 @@ function App() {
       <Main />
     </>
   );
-}
+};
 
 export default App;

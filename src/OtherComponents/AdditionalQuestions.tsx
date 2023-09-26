@@ -1,28 +1,25 @@
+import "../index.css";
 import plus from "../assets/plus.png";
 import pen from "../assets/pen.png";
-import "../index.css";
-import NewQuestion from "./NewQuestion";
+
+//Components
+import { NewQuestion } from "./NewQuestion";
 import { useState, useEffect } from "react";
+import { initialNewForm } from "../constants";
 import { extraQuestionsDto } from "../Dto";
 
-const extraProfileQuestions: extraQuestionsDto[] = [];
-console.log(extraProfileQuestions.length);
-const Additional = ({ formData, setFormData }: any) => {
+const extraAddQuestions: extraQuestionsDto[] = [];
+
+export const Additional = ({ setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
-  const [newFormDetails, setNewFormDetails] = useState({
-    type: "",
-    question: "",
-  });
-  function handleNewQuestion() {
+  const [newFormDetails, setNewFormDetails] = useState(initialNewForm);
+  const handleNewQuestion = () => {
     setNewQuestion(!newQuestion);
-  }
-  const handleChange = (e: any) => {
-    const { name, checked } = e.target;
-    setFormData({ ...formData, [name]: checked });
   };
+
   useEffect(() => {
     if (newFormDetails.type !== "" && newFormDetails.question !== "") {
-      extraProfileQuestions.push(newFormDetails);
+      extraAddQuestions.push(newFormDetails);
     }
     setNewQuestion(false);
     setFormData((prevData: any) => ({
@@ -30,16 +27,20 @@ const Additional = ({ formData, setFormData }: any) => {
         ...prevData.data,
         attributes: {
           ...prevData.data.attributes,
-          customizedQuestions: extraProfileQuestions,
+          customisedQuestions: [
+            // ...prevData.data.attributes.customisedQuestions,
+            ...extraAddQuestions,
+          ],
         },
       },
     }));
   }, [newFormDetails]);
+
   return (
     <>
       <div>
-        {extraProfileQuestions &&
-          extraProfileQuestions.map((question, idx) => {
+        {extraAddQuestions &&
+          extraAddQuestions.map((question, idx) => {
             return (
               <div className="question" key={idx}>
                 <span className="question-type">{question.type}</span>
@@ -66,4 +67,3 @@ const Additional = ({ formData, setFormData }: any) => {
     </>
   );
 };
-export default Additional;

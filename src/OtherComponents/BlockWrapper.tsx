@@ -1,6 +1,8 @@
 import "../index.css";
 import { ReactNode } from "react";
-const BlockWrapper = (props: { title: string; children: ReactNode }) => {
+
+//FUNCTION TO WRAP A BLOCK OF CODE WITH A HEADER
+export const BlockWrapper = (props: { title: string; children: ReactNode }) => {
   return (
     <section>
       <h1 className="header">{props.title}</h1>
@@ -8,4 +10,3 @@ const BlockWrapper = (props: { title: string; children: ReactNode }) => {
     </section>
   );
 };
-export default BlockWrapper;

@@ -1,9 +1,13 @@
+import "../index.css";
+
+//Assets
 import nt from "../assets/NT.png";
 import menu from "../assets/menu.svg";
 import home from "../assets/home.png";
 import doc from "../assets/doc.png";
-import "../index.css";
-const Menu = () => {
+
+//Left Menu Component
+export const Menu = () => {
   return (
     <nav className="flex-col">
       <div id="main-icons">
@@ -25,4 +29,3 @@ const NTStyle: React.CSSProperties = {
   borderRadius: "50%",
   height: "fit-content",
 };
-export default Menu;

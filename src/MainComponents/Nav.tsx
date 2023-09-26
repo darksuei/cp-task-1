@@ -1,6 +1,7 @@
 import "../index.css";
 
-const Nav = () => {
+//Top Navigation
+export const Nav = () => {
   return (
     <ul className="flex-row nav-tab">
       <li className="flex-row">Program Details</li>
@@ -12,4 +13,3 @@ const Nav = () => {
     </ul>
   );
 };
-export default Nav;

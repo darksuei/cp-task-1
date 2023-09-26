@@ -1,26 +1,30 @@
 import "../index.css";
-import plus from "../assets/plus.png";
 import { useState, useEffect } from "react";
+
+//Assets
+import plus from "../assets/plus.png";
 import pen from "../assets/pen.png";
-import NewQuestion from "./NewQuestion";
-import { extraQuestionsDto } from "../Dto";
-import { infoDto } from "../Dto";
+import { NewQuestion } from "./NewQuestion";
+import { info } from "../constants";
+import { infoDto, extraQuestionsDto } from "../Dto";
+import { initialPersonalValues } from "../constants";
 
-const extraProfileQuestions: extraQuestionsDto[] = [];
+const extraPersonalQuestions: extraQuestionsDto[] = [];
 
-const PersonalInfo = ({ formData, setFormData }: any) => {
+export const PersonalInfo = ({ setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
   const [newFormDetails, setNewFormDetails] = useState({
     type: "",
     question: "",
   });
-  const [prevFormData, setPrevFormData] = useState<any>(initialValues);
+  const [prevFormData, setPrevFormData] = useState<any>(initialPersonalValues);
   function handleNewQuestion() {
     setNewQuestion(!newQuestion);
   }
   useEffect(() => {
+    console.log(newFormDetails);
     if (newFormDetails.type !== "" && newFormDetails.question !== "") {
-      extraProfileQuestions.push(newFormDetails);
+      extraPersonalQuestions.push(newFormDetails);
     }
     setNewQuestion(false);
     setFormData((prevData: any) => ({
@@ -30,13 +34,16 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
           ...prevData.data.attributes,
           personalInformation: {
             ...prevData.data.attributes.personalInformation,
-            personalQuestions: extraProfileQuestions,
+            personalQuestions: extraPersonalQuestions,
           },
         },
       },
     }));
   }, [newFormDetails]);
-  const handleChange = (e: any, item: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    item: infoDto
+  ) => {
     const { name, checked } = e.target;
     setPrevFormData((prevPrevFormData: any) => ({
       ...prevPrevFormData,
@@ -98,7 +105,7 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
         })}
       </div>
       <div className="additional-questions">
-        {extraProfileQuestions.map((question, idx) => {
+        {extraPersonalQuestions.map((question, idx) => {
           return (
             <div className="question" key={idx}>
               <span className="question-type">{question.type}</span>
@@ -126,103 +133,3 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
   );
 };
 export default PersonalInfo;
-
-const initialValues = {
-  firstName: {
-    internal: false,
-    show: false,
-  },
-  lastName: {
-    internal: false,
-    show: false,
-  },
-  emailId: {
-    internal: false,
-    show: false,
-  },
-  phoneNumber: {
-    internal: false,
-    show: false,
-  },
-  nationality: {
-    internal: false,
-    show: false,
-  },
-  currentResidence: {
-    internal: false,
-    show: false,
-  },
-  idNumber: {
-    internal: false,
-    show: false,
-  },
-  dob: {
-    internal: false,
-    show: false,
-  },
-  gender: {
-    internal: false,
-    show: false,
-  },
-};
-const info: infoDto[] = [
-  {
-    type: "text",
-    name: "firstName",
-    value: "First Name",
-    hasOptions: false,
-    options: {
-      internal: false,
-      show: false,
-    },
-  },
-  {
-    type: "text",
-    name: "lastName",
-    value: "Last Name",
-    hasOptions: false,
-  },
-  {
-    type: "email",
-    name: "emailId",
-    value: "Email",
-    hasOptions: false,
-  },
-  {
-    type: "tel",
-    name: "phoneNumber",
-    value: `Phone`,
-    details: " (without dial code)",
-    hasOptions: true,
-  },
-  {
-    type: "text",
-    name: "nationality",
-    value: "Nationality",
-    hasOptions: true,
-  },
-  {
-    type: "residence",
-    name: "currentResidence",
-    value: "Current Residence",
-    hasOptions: true,
-  },
-  {
-    type: "text",
-    name: "idNumber",
-    value: "ID Number",
-    hasOptions: true,
-  },
-  {
-    type: "text",
-    name: "dob",
-    value: "Date of Birth",
-    hasOptions: true,
-  },
-  {
-    type: "text",
-    name: "gender",
-    value: "Gender",
-    hasOptions: true,
-  },
-];

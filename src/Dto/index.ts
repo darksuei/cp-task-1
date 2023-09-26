@@ -15,7 +15,12 @@ export interface infoDto {
   hasOptions: boolean;
   details?: string;
   options?: {
-    internal: boolean;
+    internalUse: boolean;
     show: boolean;
   };
+}
+
+export interface profileDto {
+  value: string;
+  name: string;
 }

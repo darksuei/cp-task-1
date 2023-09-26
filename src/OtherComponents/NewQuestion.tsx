@@ -1,15 +1,13 @@
 import "../index.css";
-import Save from "./Save";
-import React, { useState, useRef } from "react";
 import plus from "../assets/plus.png";
+import { Save } from "./Save";
+import React, { useState, useRef } from "react";
+import { initialNewForm } from "../constants";
 
-const NewQuestion = (props: any) => {
+export const NewQuestion = (props: any) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
-  const [newFormObj, setNewFormObj] = useState<any>({
-    type: "",
-    question: "",
-  });
-  const [type, setType] = useState<string>("paragraph");
+  const [newFormObj, setNewFormObj] = useState<any>(initialNewForm);
+  const [type, setType] = useState<string>("Paragraph");
   const mcq = useRef<HTMLDivElement | null>(null);
 
   const createNewInput = () => {
@@ -21,15 +19,17 @@ const NewQuestion = (props: any) => {
     `;
     mcq.current?.insertBefore(newInput, mcq.current.lastChild);
   };
-  function handleQuestionChange(e: any) {
-    setNewFormObj((prev: any) => {
+
+  const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewFormObj(() => {
       return {
         type: type,
         question: e.target.value,
       };
     });
-  }
-  function handleChoicesChange(e: any) {
+  };
+
+  const handleChoicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFormObj((prev: any) => {
       return {
         ...prev,
@@ -39,38 +39,38 @@ const NewQuestion = (props: any) => {
         },
       };
     });
-  }
+  };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
     setSelectedOption(selectedValue);
     switch (selectedValue) {
       case "paragraph":
-        setType("paragraph");
+        setType("Paragraph");
         break;
       case "short":
-        setType("short");
+        setType("ShortAnswer");
         break;
       case "yesorno":
-        setType("yesorno");
+        setType("YesNo");
         break;
       case "dropdown":
-        setType("dropdown");
+        setType("Dropdown");
         break;
       case "multiple":
-        setType("multiple");
+        setType("MultipleChoice");
         break;
       case "date":
-        setType("date");
+        setType("Date");
         break;
       case "number":
-        setType("number");
+        setType("Number");
         break;
       case "file":
-        setType("file");
+        setType("FileUpload");
         break;
       case "video":
-        setType("video");
+        setType("FileUpload");
         break;
       default:
         break;
@@ -130,6 +130,7 @@ const NewQuestion = (props: any) => {
                   <input
                     type="text"
                     name="maxChoice"
+                    onChange={handleChoicesChange}
                     placeholder="Enter number of choices allowed here"
                   />
                 </>
@@ -192,7 +193,7 @@ const NewQuestion = (props: any) => {
                 </>
               );
             default:
-              return <></>;
+              break;
           }
         })()}
       </div>
@@ -202,11 +203,9 @@ const NewQuestion = (props: any) => {
           props.fn();
         }}
         saveFn={() => {
-          console.log(newFormObj);
           props.setNewFormDetails(newFormObj);
         }}
       />
     </div>
   );
 };
-export default NewQuestion;
