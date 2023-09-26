@@ -96,17 +96,15 @@ export const NewQuestion = (props: any) => {
         </select>
       </div>
       <div className="new-question-option">
-        {type !== "FileUpload" && (
-          <>
-            <label htmlFor="question">Question</label>
-            <input
-              type="text"
-              name="question"
-              placeholder="Type here"
-              onChange={handleQuestionChange}
-            />
-          </>
-        )}
+        <>
+          <label htmlFor="question">Question</label>
+          <input
+            type="text"
+            name="question"
+            placeholder="Type here"
+            onChange={handleQuestionChange}
+          />
+        </>
         {(() => {
           switch (type) {
             case "MultipleChoice":
@@ -162,7 +160,7 @@ export const NewQuestion = (props: any) => {
                 <>
                   <textarea
                     name="video"
-                    placeholder="Type question here"
+                    placeholder="More information here.."
                   ></textarea>
                   <span className="video-input-cat">
                     <input

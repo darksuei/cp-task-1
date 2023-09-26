@@ -406,6 +406,9 @@ button:hover {
 }
 textarea {
   padding: 10px;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 .video-input-cat {
   display: flex;
