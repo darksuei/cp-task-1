@@ -56,7 +56,7 @@ export const Upload = ({ formData, setFormData }: any) => {
             alt="Uploaded Image"
             className="uploaded-img"
           />
-          <div>
+          <div className="close-img">
             <span
               className="close"
               onClick={() => {

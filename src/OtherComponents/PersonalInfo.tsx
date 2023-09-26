@@ -22,7 +22,6 @@ export const PersonalInfo = ({ setFormData }: any) => {
     setNewQuestion(!newQuestion);
   }
   useEffect(() => {
-    console.log(newFormDetails);
     if (newFormDetails.type !== "" && newFormDetails.question !== "") {
       extraPersonalQuestions.push(newFormDetails);
     }

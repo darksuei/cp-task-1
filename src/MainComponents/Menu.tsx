@@ -8,13 +8,16 @@ import doc from "../assets/doc.png";
 
 //Left Menu Component
 export const Menu = () => {
+  const handleNavClick = () => {
+    alert("Not available yet");
+  };
   return (
     <nav className="flex-col">
       <div id="main-icons">
-        <img src={menu} alt="Menu" />
+        <img src={menu} alt="Menu" onClick={handleNavClick} />
         <div className="flex-col" id="icons-cat">
-          <img src={home} alt="Home" />
-          <img src={doc} alt="Doc" />
+          <img src={home} alt="Home" onClick={handleNavClick} />
+          <img src={doc} alt="Doc" onClick={handleNavClick} />
         </div>
       </div>
       <div className="absolute-mid" style={NTStyle}>

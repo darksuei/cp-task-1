@@ -103,6 +103,9 @@ section {
   box-shadow: 3px 6px 6px -3px rgb(0 0 0 / 0.1),
     -3px -4px 6px -3px rgb(0 0 0 / 0.1);
 }
+#additional-section {
+  min-height: 100px;
+}
 section > .header {
   box-sizing: border-box;
   background-color: #d0f7fa;
@@ -134,7 +137,7 @@ section > .header {
 .personal-info {
   gap: 10px;
   width: 100%;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 .form-container {
   display: flex;

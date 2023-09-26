@@ -49,6 +49,7 @@ export const Main = () => {
           error
         );
       }
+      window.location.reload();
     } else {
       console.error("Failed to submit:", response.statusText);
     }
