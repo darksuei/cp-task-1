@@ -1,7 +1,8 @@
 import plus from "../assets/plus.png";
 import "../index.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewQuestion from "./NewQuestion";
+import pen from "../assets/pen.png";
 const profile: any = [
   {
     value: "Education",
@@ -16,16 +17,34 @@ const profile: any = [
     name: "resume",
   },
 ];
+interface extraQuestionsDto {
+  type: string;
+  question: string;
+}
+const extraProfileQuestions: extraQuestionsDto[] = [];
 
 const Profile = ({ formData, setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
   const [profileData, setProfileData] = useState<any>(initialValues);
   const [newFormDetails, setNewFormDetails] = useState({
     type: "",
-    name: "",
-    value: "",
-    hasOptions: true,
+    question: "",
   });
+  useEffect(() => {
+    if (newFormDetails.type !== "" && newFormDetails.question !== "") {
+      extraProfileQuestions.push(newFormDetails);
+    }
+    setNewQuestion(false);
+    setFormData((prevData: any) => ({
+      data: {
+        ...prevData.data,
+        attributes: {
+          ...prevData.data.attributes,
+          profileQuestions: extraProfileQuestions,
+        },
+      },
+    }));
+  }, [newFormDetails]);
   function handleNewQuestion() {
     setNewQuestion(!newQuestion);
   }
@@ -85,8 +104,25 @@ const Profile = ({ formData, setFormData }: any) => {
           </div>
         );
       })}
+      <div className="additional-questions">
+        {extraProfileQuestions.map((question, idx) => {
+          return (
+            <div className="question" key={idx}>
+              <span className="question-type">{question.type}</span>
+              <div className="question-value">
+                {question.question}
+                <img src={pen} alt="Pen" />
+              </div>
+            </div>
+          );
+        })}
+      </div>
       {newQuestion ? (
-        <NewQuestion fn={handleNewQuestion} />
+        <NewQuestion
+          fn={handleNewQuestion}
+          newFormDetails={newFormDetails}
+          setNewFormDetails={setNewFormDetails}
+        />
       ) : (
         <div id="add-question" onClick={handleNewQuestion}>
           <img src={plus} />

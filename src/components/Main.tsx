@@ -40,7 +40,7 @@ const Main = () => {
       <BlockWrapper title="Additional questions">
         <Additional formData={formData} setFormData={setFormData} />
       </BlockWrapper>
-      <Save size={120} fn={handleSubmit} />
+      <Save size={120} fn={handleSubmit} saveFn={() => {}} />
     </main>
   );
 };

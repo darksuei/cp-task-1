@@ -419,3 +419,8 @@ textarea {
   flex-direction: column;
   gap: 10px;
 }
+.additional-questions {
+  width: 90%;
+  margin-inline: auto;
+  margin-top: 10px;
+}

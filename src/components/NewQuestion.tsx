@@ -5,8 +5,11 @@ import plus from "../assets/plus.png";
 
 const NewQuestion = (props: any) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
-  const [newFormObj, setNewFormObj] = useState<any>([]);
-  const [type, setType] = useState<string>("text");
+  const [newFormObj, setNewFormObj] = useState<any>({
+    type: "",
+    question: "",
+  });
+  const [type, setType] = useState<string>("paragraph");
   const mcq = useRef<HTMLDivElement | null>(null);
 
   const createNewInput = () => {
@@ -18,11 +21,13 @@ const NewQuestion = (props: any) => {
     `;
     mcq.current?.insertBefore(newInput, mcq.current.lastChild);
   };
-  function handleChange() {
-    setNewFormObj([
-      ...props.newFormObj,
-      { type: type, name: "", value: "", hasOptions: true },
-    ]);
+  function handleQuestionChange(e: any) {
+    setNewFormObj((prev: any) => {
+      return {
+        type: type,
+        question: e.target.value,
+      };
+    });
   }
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -30,10 +35,10 @@ const NewQuestion = (props: any) => {
     setSelectedOption(selectedValue);
     switch (selectedValue) {
       case "paragraph":
-        setType("text");
+        setType("paragraph");
         break;
       case "short":
-        setType("text");
+        setType("short");
         break;
       case "yesorno":
         setType("yesorno");
@@ -45,13 +50,13 @@ const NewQuestion = (props: any) => {
         setType("multiple");
         break;
       case "date":
-        setType("text");
+        setType("date");
         break;
       case "number":
-        setType("text");
+        setType("number");
         break;
       case "file":
-        setType("text");
+        setType("file");
         break;
       case "video":
         setType("video");
@@ -83,7 +88,7 @@ const NewQuestion = (props: any) => {
           type="text"
           name="question"
           placeholder="Type here"
-          onChange={handleChange}
+          onChange={handleQuestionChange}
         />
         {(() => {
           switch (type) {
@@ -176,13 +181,16 @@ const NewQuestion = (props: any) => {
           }
         })()}
       </div>
-      <span
-        onClick={() => {
+      <Save
+        size={90}
+        fn={() => {
+          props.fn();
+        }}
+        saveFn={() => {
+          console.log(newFormObj);
           props.setNewFormDetails(newFormObj);
         }}
-      >
-        <Save size={90} fn={props.fn} />
-      </span>
+      />
     </div>
   );
 };

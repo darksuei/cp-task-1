@@ -1,7 +1,7 @@
 import "../index.css";
 import close from "../assets/close.png";
 
-const Save = (props: { size: number; fn: Function }) => {
+const Save = (props: { size: number; fn: Function; saveFn: Function }) => {
   return (
     <div className="btn-wrapper">
       <span
@@ -16,7 +16,7 @@ const Save = (props: { size: number; fn: Function }) => {
       <button
         style={{ width: props.size }}
         onClick={() => {
-          props.fn();
+          props.saveFn();
         }}
       >
         Save

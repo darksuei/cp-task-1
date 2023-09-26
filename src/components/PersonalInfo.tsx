@@ -1,20 +1,39 @@
 import "../index.css";
 import plus from "../assets/plus.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import pen from "../assets/pen.png";
 import NewQuestion from "./NewQuestion";
+interface extraQuestionsDto {
+  type: string;
+  question: string;
+}
+const extraProfileQuestions: extraQuestionsDto[] = [];
 
 const PersonalInfo = ({ formData, setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
   const [newFormDetails, setNewFormDetails] = useState({
     type: "",
-    name: "",
-    value: "",
-    hasOptions: true,
+    question: "",
   });
   const [prevFormData, setPrevFormData] = useState<any>(initialValues);
   function handleNewQuestion() {
     setNewQuestion(!newQuestion);
   }
+  useEffect(() => {
+    if (newFormDetails.type !== "" && newFormDetails.question !== "") {
+      extraProfileQuestions.push(newFormDetails);
+    }
+    setNewQuestion(false);
+    setFormData((prevData: any) => ({
+      data: {
+        ...prevData.data,
+        attributes: {
+          ...prevData.data.attributes,
+          profileQuestions: extraProfileQuestions,
+        },
+      },
+    }));
+  }, [newFormDetails]);
   const handleChange = (e: any, item: any) => {
     const { name, checked } = e.target;
     setPrevFormData((prevPrevFormData: any) => ({
@@ -76,9 +95,23 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
           );
         })}
       </div>
+      <div className="additional-questions">
+        {extraProfileQuestions.map((question, idx) => {
+          return (
+            <div className="question" key={idx}>
+              <span className="question-type">{question.type}</span>
+              <div className="question-value">
+                {question.question}
+                <img src={pen} alt="Pen" />
+              </div>
+            </div>
+          );
+        })}
+      </div>
       {newQuestion ? (
         <NewQuestion
           fn={handleNewQuestion}
+          newFormDetails={newFormDetails}
           setNewFormDetails={setNewFormDetails}
         />
       ) : (
