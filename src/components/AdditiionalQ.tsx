@@ -31,9 +31,9 @@ const Additional = ({ formData, setFormData }: any) => {
   return (
     <>
       <div>
-        {questions.map((question) => {
+        {questions.map((question, idx) => {
           return (
-            <div className="question">
+            <div className="question" key={idx}>
               <span className="question-type">{question.type}</span>
               <div className="question-value">
                 {question.value}

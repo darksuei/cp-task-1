@@ -1,26 +1,38 @@
 import "../index.css";
 import plus from "../assets/plus.png";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import NewQuestion from "./NewQuestion";
 
 const PersonalInfo = ({ formData, setFormData }: any) => {
   const [newQuestion, setNewQuestion] = useState(false);
-  const [personalFormObj, setPersonalFormObj] = useState<any>([]);
   const [newFormDetails, setNewFormDetails] = useState({
     type: "",
     name: "",
     value: "",
     hasOptions: true,
   });
-  useEffect(() => {
-    setFormData([...formData, newFormDetails]);
-  }, [newFormDetails]);
+  const [prevFormData, setPrevFormData] = useState<any>(initialValues);
   function handleNewQuestion() {
     setNewQuestion(!newQuestion);
   }
-  const handleChange = (e: any) => {
+  const handleChange = (e: any, item: any) => {
     const { name, checked } = e.target;
-    setFormData({ ...formData, [name]: checked });
+    setPrevFormData((prevPrevFormData: any) => ({
+      ...prevPrevFormData,
+      [item.name]: {
+        ...prevPrevFormData[item.name],
+        [name]: checked,
+      },
+    }));
+    setFormData((prevData: any) => ({
+      data: {
+        ...prevData.data,
+        attributes: {
+          ...prevData.data.attributes,
+          personalInformation: prevFormData,
+        },
+      },
+    }));
   };
   return (
     <>
@@ -39,8 +51,8 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
                       <input
                         type="checkbox"
                         className="checkbox"
-                        name=""
-                        onChange={handleChange}
+                        name={"internal"}
+                        onChange={(e) => handleChange(e, item)}
                       />
                       Internal
                     </span>
@@ -49,8 +61,8 @@ const PersonalInfo = ({ formData, setFormData }: any) => {
                         <input
                           type="checkbox"
                           id="toggleSwitch"
-                          name=""
-                          onChange={handleChange}
+                          name="show"
+                          onChange={(e) => handleChange(e, item)}
                         />
                         <span className="slider"></span>
                       </label>
@@ -86,17 +98,48 @@ interface infoDto {
   value: string;
   hasOptions: boolean;
   details?: string;
+  options?: {
+    internal: boolean;
+    show: boolean;
+  };
 }
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  emailId: "",
-  phoneNumber: "",
-  nationality: "",
-  currentResidence: "",
-  idNumber: "",
-  dob: "",
-  gender: "",
+  firstName: {
+    internal: false,
+    show: false,
+  },
+  lastName: {
+    internal: false,
+    show: false,
+  },
+  emailId: {
+    internal: false,
+    show: false,
+  },
+  phoneNumber: {
+    internal: false,
+    show: false,
+  },
+  nationality: {
+    internal: false,
+    show: false,
+  },
+  currentResidence: {
+    internal: false,
+    show: false,
+  },
+  idNumber: {
+    internal: false,
+    show: false,
+  },
+  dob: {
+    internal: false,
+    show: false,
+  },
+  gender: {
+    internal: false,
+    show: false,
+  },
 };
 const info: infoDto[] = [
   {
@@ -104,6 +147,10 @@ const info: infoDto[] = [
     name: "firstName",
     value: "First Name",
     hasOptions: false,
+    options: {
+      internal: false,
+      show: false,
+    },
   },
   {
     type: "text",
@@ -113,13 +160,13 @@ const info: infoDto[] = [
   },
   {
     type: "email",
-    name: "email",
+    name: "emailId",
     value: "Email",
     hasOptions: false,
   },
   {
     type: "tel",
-    name: "phone",
+    name: "phoneNumber",
     value: `Phone`,
     details: " (without dial code)",
     hasOptions: true,
@@ -132,13 +179,13 @@ const info: infoDto[] = [
   },
   {
     type: "residence",
-    name: "text",
+    name: "currentResidence",
     value: "Current Residence",
     hasOptions: true,
   },
   {
     type: "text",
-    name: "id",
+    name: "idNumber",
     value: "ID Number",
     hasOptions: true,
   },

@@ -8,10 +8,22 @@ import { useState, useEffect } from "react";
 import Save from "./Save";
 
 const Main = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<any>({
+    data: {
+      attributes: {
+        personalInformation: {},
+      },
+    },
+  }); // OVERALL FORM DATA FROM ALL COMPONENTS
+
   useEffect(() => {
     console.log(formData);
   }, [formData]);
+  function handleSubmit() {
+    console.log({
+      data: formData,
+    });
+  }
 
   return (
     <main>
@@ -28,7 +40,7 @@ const Main = () => {
       <BlockWrapper title="Additional questions">
         <Additional formData={formData} setFormData={setFormData} />
       </BlockWrapper>
-      <Save size={120} fn={() => {}} />
+      <Save size={120} fn={handleSubmit} />
     </main>
   );
 };
