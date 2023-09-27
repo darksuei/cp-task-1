@@ -46,7 +46,7 @@ export const NewQuestion = (props: any) => {
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
     setSelectedOption(selectedValue);
-    switch (selectedValue) {
+    switch (selectedOption) {
       case "paragraph":
         setType("Paragraph");
         break;
