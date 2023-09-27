@@ -1,11 +1,10 @@
 export interface extraQuestionsDto {
   type: string;
   question: string;
-  choices?: {
-    maxChoice: number;
-    disqualify: boolean;
-    other: boolean;
-  };
+  choices?: string[];
+  maxChoice?: number;
+  disqualify?: boolean;
+  other?: boolean;
 }
 
 export interface infoDto {
@@ -28,4 +27,8 @@ export interface profileDto {
 export interface initialFormType {
   type: string;
   question: string;
+  choices?: string[];
+  maxChoice?: number;
+  disqualify?: boolean;
+  other?: boolean;
 }

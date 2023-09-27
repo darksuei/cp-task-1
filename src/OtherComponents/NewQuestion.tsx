@@ -1,78 +1,108 @@
 import "../index.css";
 import plus from "../assets/plus.png";
+import close from "../assets/close.png";
 import { Save } from "./Save";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { initialNewForm } from "../constants";
 
 export const NewQuestion = (props: any) => {
-  const [selectedOption, setSelectedOption] = useState("");
   const [newFormObj, setNewFormObj] = useState(initialNewForm);
-  const [type, setType] = useState("Paragraph");
+  const [type, setType] = useState("");
   const mcq = useRef<HTMLDivElement | null>(null);
+  const choiceRef = useRef<HTMLInputElement | null>(null);
 
-  const createNewInput = () => {
+  const createNewInput = (val: string) => {
     const newInput = document.createElement("div");
     newInput.className = "choice";
     newInput.innerHTML = `
-      <input type="text" name="choice" placeholder="Type here" />
-      <img src=${plus} alt="plus" class="plus-mcq"/>
+      <span>${val}</span>
+      <img src=${close} alt="close" class="close"/>
     `;
-    mcq.current?.appendChild(newInput);
-    const plusImage = newInput.querySelector(".plus-mcq");
-    plusImage!.addEventListener("click", createNewInput);
+    mcq.current?.insertBefore(newInput, mcq.current?.lastChild);
+    const closeImage = newInput.querySelector(".close");
+    closeImage?.addEventListener("click", () => {
+      mcq.current?.removeChild(newInput);
+      setNewFormObj((prev: any) => {
+        return {
+          ...prev,
+          choices: prev.choices.filter((choice: string) => choice !== val),
+        };
+      });
+    });
   };
 
   const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewFormObj(() => {
+    setNewFormObj((prev: any) => {
       return {
+        ...prev,
         type: type,
         question: e.target.value,
       };
     });
   };
 
+  const handlechoiceOptions = () => {
+    if (choiceRef.current?.value !== "") {
+      setNewFormObj((prev: any) => {
+        return {
+          ...prev,
+          choices: [...(prev.choices ?? []), choiceRef.current!.value],
+        };
+      });
+      createNewInput(choiceRef.current!.value);
+      choiceRef.current!.value = "";
+    }
+  };
+
   const handleChoicesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFormObj((prev: any) => {
+      console.log(prev);
+      let value: string | number | boolean = e.target.value;
+      if (e.target.name === "maxChoice") {
+        value = Number(value);
+      } else if (e.target.name === "other" || e.target.name === "disqualify") {
+        value = e.target.checked;
+      }
       return {
         ...prev,
-        choices: {
-          ...prev.choices,
-          [e.target.name]: e.target.value,
-        },
+        [e.target.name]: value,
       };
     });
   };
 
+  useEffect(() => {
+    setType(() => "Paragraph");
+  }, []);
+
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
-    setSelectedOption(selectedValue);
-    switch (selectedOption) {
+    switch (selectedValue) {
       case "paragraph":
-        setType("Paragraph");
+        setType(() => "Paragraph");
         break;
       case "short":
-        setType("ShortAnswer");
+        setType(() => "ShortAnswer");
         break;
       case "yesorno":
-        setType("YesNo");
+        setType(() => "YesNo");
         break;
       case "dropdown":
-        setType("Dropdown");
+        setType(() => "Dropdown");
         break;
       case "multiple":
-        setType("MultipleChoice");
+        setType(() => "MultipleChoice");
         break;
       case "date":
-        setType("Date");
+        setType(() => "Date");
         break;
       case "number":
-        setType("Number");
+        setType(() => "Number");
         break;
       case "file":
-        setType("FileUpload");
+        setType(() => "FileUpload");
         break;
       case "video":
-        setType("FileUpload");
+        setType(() => "FileUpload");
         break;
       default:
         break;
@@ -117,29 +147,34 @@ export const NewQuestion = (props: any) => {
                         type="text"
                         name="choice"
                         placeholder="Type here"
+                        ref={choiceRef}
                       />
                       <img
                         src={plus}
                         alt="plus"
                         className="plus-mcq"
-                        onClick={createNewInput}
+                        onClick={handlechoiceOptions}
                       />
                     </div>
                   </div>
                   <span className="flex-row w-fit">
-                    <input type="checkbox" className="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="other"
+                      className="checkbox"
+                      onChange={handleChoicesChange}
+                    />
                     <span className="description">Enable "Other" option</span>
                   </span>
                   <label htmlFor="max-choice">Max choice allowed</label>
                   <input
-                    type="text"
+                    type="number"
                     name="maxChoice"
                     onChange={handleChoicesChange}
                     placeholder="Enter number of choices allowed here"
                   />
                 </>
               );
-
             case "Dropdown":
               return (
                 <>
@@ -150,17 +185,23 @@ export const NewQuestion = (props: any) => {
                         type="text"
                         name="choice"
                         placeholder="Type here"
+                        ref={choiceRef}
                       />
                       <img
                         src={plus}
                         alt="plus"
                         className="plus-mcq"
-                        onClick={createNewInput}
+                        onClick={handlechoiceOptions}
                       />
                     </div>
                   </div>
                   <span className="flex-row w-fit">
-                    <input type="checkbox" className="checkbox" />
+                    <input
+                      type="checkbox"
+                      name="other"
+                      className="checkbox"
+                      onChange={handleChoicesChange}
+                    />
                     <span className="description">Enable "Other" option</span>
                   </span>
                   <label htmlFor="max-choice">Max choice allowed</label>
@@ -180,6 +221,7 @@ export const NewQuestion = (props: any) => {
                       type="checkbox"
                       name="disqualify"
                       className="checkbox"
+                      onChange={handleChoicesChange}
                     />
                     <span className="description">
                       Disqualify candidate if the answer is no
@@ -218,7 +260,7 @@ export const NewQuestion = (props: any) => {
           props.fn();
         }}
         saveFn={() => {
-          props.setNewFormDetails(newFormObj);
+          props.setNewFormDetails(() => newFormObj);
         }}
       />
     </div>
