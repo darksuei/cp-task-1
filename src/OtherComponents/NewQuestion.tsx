@@ -108,6 +108,38 @@ export const NewQuestion = (props: any) => {
         {(() => {
           switch (type) {
             case "MultipleChoice":
+              return (
+                <>
+                  <label htmlFor="question">Choice</label>
+                  <div className="mcq-input-wrapper" ref={mcq}>
+                    <div className="choice">
+                      <input
+                        type="text"
+                        name="choice"
+                        placeholder="Type here"
+                      />
+                      <img
+                        src={plus}
+                        alt="plus"
+                        className="plus-mcq"
+                        onClick={createNewInput}
+                      />
+                    </div>
+                  </div>
+                  <span className="flex-row w-fit">
+                    <input type="checkbox" className="checkbox" />
+                    <span className="description">Enable "Other" option</span>
+                  </span>
+                  <label htmlFor="max-choice">Max choice allowed</label>
+                  <input
+                    type="text"
+                    name="maxChoice"
+                    onChange={handleChoicesChange}
+                    placeholder="Enter number of choices allowed here"
+                  />
+                </>
+              );
+
             case "Dropdown":
               return (
                 <>
