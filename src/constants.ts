@@ -1,8 +1,13 @@
-import { extraQuestionsDto, infoDto, profileDto } from "./Dto";
+import {
+  extraQuestionsDto,
+  infoDto,
+  initialFormType,
+  profileDto,
+} from "./Types";
 
 export const extraQuestions: extraQuestionsDto[] = [];
 
-export const initialNewForm = {
+export const initialNewForm: initialFormType = {
   type: "",
   question: "",
 };

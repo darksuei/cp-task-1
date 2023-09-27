@@ -1,16 +1,22 @@
 import "../index.css";
 import upload from "../assets/upload.png";
-import { useState, useRef } from "react";
+import { useState, useRef, ChangeEvent } from "react";
 import close from "../assets/close.png";
 
-export const Upload = ({ formData, setFormData }: any) => {
+export const Upload = ({
+  setFormData,
+}: {
+  setFormData: React.Dispatch<React.SetStateAction<any>>;
+}) => {
   const fileInput = useRef<HTMLInputElement | null>(null);
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
   >(null);
 
-  const handleImageUpload = (e: any) => {
-    const file = e.target.files[0];
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
+    const file = e.target.files![0];
 
     if (file) {
       const reader = new FileReader();

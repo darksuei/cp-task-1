@@ -24,3 +24,8 @@ export interface profileDto {
   value: string;
   name: string;
 }
+
+export interface initialFormType {
+  type: string;
+  question: string;
+}

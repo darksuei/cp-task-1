@@ -7,7 +7,7 @@ import close from "../assets/close.png";
 import { NewQuestion } from "./NewQuestion";
 import { useState, useEffect } from "react";
 import { initialNewForm } from "../constants";
-import { extraQuestionsDto } from "../Dto";
+import { extraQuestionsDto } from "../Types";
 
 const extraAddQuestions: extraQuestionsDto[] = [];
 

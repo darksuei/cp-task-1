@@ -5,9 +5,9 @@ import React, { useState, useRef } from "react";
 import { initialNewForm } from "../constants";
 
 export const NewQuestion = (props: any) => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
-  const [newFormObj, setNewFormObj] = useState<any>(initialNewForm);
-  const [type, setType] = useState<string>("Paragraph");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [newFormObj, setNewFormObj] = useState(initialNewForm);
+  const [type, setType] = useState("Paragraph");
   const mcq = useRef<HTMLDivElement | null>(null);
 
   const createNewInput = () => {

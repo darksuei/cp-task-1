@@ -134,6 +134,11 @@ section > .header {
   gap: 0px;
   cursor: pointer;
   position: relative;
+  border-radius: 4px;
+}
+.upload-main:hover {
+  background-color: rgb(248, 249, 249);
+  color: #909090;
 }
 .mini-header {
   font-size: 14px;

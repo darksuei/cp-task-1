@@ -6,12 +6,16 @@ import plus from "../assets/plus.png";
 import pen from "../assets/pen.png";
 import close from "../assets/close.png";
 import { NewQuestion } from "./NewQuestion";
-import { extraQuestionsDto, profileDto } from "../Dto";
+import { extraQuestionsDto, profileDto } from "../Types";
 import { initialNewForm, profile } from "../constants";
 
 const extraProfileQuestions: extraQuestionsDto[] = [];
 
-export const Profile = ({ setFormData }: any) => {
+export const Profile = ({
+  setFormData,
+}: {
+  setFormData: React.Dispatch<React.SetStateAction<any>>;
+}) => {
   const [allowEdit, setAllowEdit] = useState<boolean[]>(
     Array(extraProfileQuestions.length).fill(false)
   );
@@ -104,7 +108,6 @@ export const Profile = ({ setFormData }: any) => {
                 </span>
               </span>
             </div>
-            {/* <input type="text" name={"text"} /> */}
           </div>
         );
       })}

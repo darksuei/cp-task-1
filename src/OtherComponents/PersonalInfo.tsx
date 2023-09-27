@@ -7,12 +7,16 @@ import pen from "../assets/pen.png";
 import close from "../assets/close.png";
 import { NewQuestion } from "./NewQuestion";
 import { info } from "../constants";
-import { infoDto, extraQuestionsDto } from "../Dto";
+import { infoDto, extraQuestionsDto } from "../Types";
 import { initialPersonalValues } from "../constants";
 
 const extraPersonalQuestions: extraQuestionsDto[] = [];
 
-export const PersonalInfo = ({ setFormData }: any) => {
+export const PersonalInfo = ({
+  setFormData,
+}: {
+  setFormData: React.Dispatch<React.SetStateAction<any>>;
+}) => {
   const [allowEdit, setAllowEdit] = useState<boolean[]>(
     Array(extraPersonalQuestions.length).fill(false)
   );
@@ -21,7 +25,7 @@ export const PersonalInfo = ({ setFormData }: any) => {
     type: "",
     question: "",
   });
-  const [prevFormData, setPrevFormData] = useState<any>(initialPersonalValues);
+  const [prevFormData, setPrevFormData] = useState(initialPersonalValues);
   function handleNewQuestion() {
     setNewQuestion(!newQuestion);
   }
