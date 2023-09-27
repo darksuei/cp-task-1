@@ -3,11 +3,7 @@ import upload from "../assets/upload.png";
 import { useState, useRef, ChangeEvent } from "react";
 import close from "../assets/close.png";
 
-export const Upload = ({
-  setFormData,
-}: {
-  setFormData: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+export const Upload = ({ setFormData }: any) => {
   const fileInput = useRef<HTMLInputElement | null>(null);
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null

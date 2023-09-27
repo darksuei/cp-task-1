@@ -12,11 +12,7 @@ import { initialPersonalValues } from "../constants";
 
 const extraPersonalQuestions: extraQuestionsDto[] = [];
 
-export const PersonalInfo = ({
-  setFormData,
-}: {
-  setFormData: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+export const PersonalInfo = ({ setFormData }: any) => {
   const [allowEdit, setAllowEdit] = useState<boolean[]>(
     Array(extraPersonalQuestions.length).fill(false)
   );

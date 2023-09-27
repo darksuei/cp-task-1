@@ -11,11 +11,7 @@ import { initialNewForm, profile } from "../constants";
 
 const extraProfileQuestions: extraQuestionsDto[] = [];
 
-export const Profile = ({
-  setFormData,
-}: {
-  setFormData: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+export const Profile = ({ setFormData }: any) => {
   const [allowEdit, setAllowEdit] = useState<boolean[]>(
     Array(extraProfileQuestions.length).fill(false)
   );
